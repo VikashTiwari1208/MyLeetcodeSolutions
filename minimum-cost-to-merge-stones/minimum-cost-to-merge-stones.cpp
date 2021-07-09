@@ -41,12 +41,12 @@ public:
                         int right_len = len - left_len;
                         // impossible to form 1 piles
                         if((left_len - 1) % (K-1) != 0){
-                            assert(dp[i][k][1] == -1);
+                           // assert(dp[i][k][1] == -1);
                             continue;
                         }
                         // impossible to form m-1 piles
                         if(right_len < m-1 or (right_len - (m-1)) % (K-1) != 0){
-                            assert(dp[k+1][j][m-1] == -1);
+                           // assert(dp[k+1][j][m-1] == -1);
                             continue;
                         }
                         if(dp[i][j][m] == -1) dp[i][j][m] = dp[i][k][1] + dp[k+1][j][m-1];
