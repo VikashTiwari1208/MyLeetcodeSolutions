@@ -6,7 +6,7 @@ public:
         {
             cnt[x-'a']++;
         }
-        sort(cnt.begin(),cnt.end(),greater<int>());
+        //sort(cnt.begin(),cnt.end(),greater<int>());
         unordered_set<int>st;
         int ans=0;
         for(int i=0;i<26;i++)
