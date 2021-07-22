@@ -42,7 +42,7 @@ public:
         for(int i=0;i<n;i++){
             mp[stones[i]] = i;
         }
-        vector<vector<int>> dp(n,vector<int>(1000,-1));
+        vector<vector<int>> dp(2020,vector<int>(2020,-1));
         return isJumpPossible(n,mp,stones[1],1,1,stones,dp);
         
     }
