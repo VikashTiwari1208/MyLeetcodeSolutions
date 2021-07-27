@@ -13,23 +13,23 @@
 <p>&nbsp;</p>
 <p><strong>Example 1:</strong></p>
 
-<pre><strong>Input:</strong> a = 1, b = 1, c = 7
+<pre style="position: relative;"><strong>Input:</strong> a = 1, b = 1, c = 7
 <strong>Output:</strong> "ccaccbcc"
 <strong>Explanation:</strong> "ccbccacc" would also be a correct answer.
-</pre>
+<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
 
 <p><strong>Example 2:</strong></p>
 
-<pre><strong>Input:</strong> a = 2, b = 2, c = 1
+<pre style="position: relative;"><strong>Input:</strong> a = 2, b = 2, c = 1
 <strong>Output:</strong> "aabbc"
-</pre>
+<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
 
 <p><strong>Example 3:</strong></p>
 
-<pre><strong>Input:</strong> a = 7, b = 1, c = 0
+<pre style="position: relative;"><strong>Input:</strong> a = 7, b = 1, c = 0
 <strong>Output:</strong> "aabaa"
 <strong>Explanation:</strong> It's the only correct answer in this case.
-</pre>
+<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
 
 <p>&nbsp;</p>
 <p><strong>Constraints:</strong></p>
