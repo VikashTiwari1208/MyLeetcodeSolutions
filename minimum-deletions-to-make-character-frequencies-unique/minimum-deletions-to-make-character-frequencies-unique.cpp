@@ -1,25 +1,24 @@
 class Solution {
 public:
     int minDeletions(string s) {
-        vector<int> cnt(26,0);
+       
+        int frq[26]={0};
         for(auto x:s)
         {
-            cnt[x-'a']++;
+            frq[x-'a']++;
         }
-        //sort(cnt.begin(),cnt.end(),greater<int>());
-        unordered_set<int>st;
         int ans=0;
+        unordered_set<int>st;
         for(int i=0;i<26;i++)
         {
-            int frq=cnt[i];
-            while(st.find(frq)!=st.end())
+            while(st.find(frq[i])!=st.end())
             {
-                ans++;
-                frq--;
+              ans++;
+                frq[i]--;
             }
-            if(frq!=0)
+            if(frq[i]>0)
             {
-                st.insert(frq);
+                st.insert(frq[i]);
             }
         }
         return ans;
