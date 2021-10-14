@@ -2,9 +2,9 @@ class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
         int n=nums.size();
-        int num1=-1;
+        int num1=0;
         int cnt1=0;
-        int num2=-1;
+        int num2=0;
         int cnt2=0;
         for(int i=0;i<n;i++)
         {
