@@ -42,14 +42,7 @@ public:
         m=grid[0].size();
         memset(dp,-1,sizeof(dp));
         int ans=-1;
-        helper(0,0,m-1,grid);
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<m;j++)
-            {
-                ans=max(ans,dp[0][i][j]);
-            }
-        }
-        return ans;
+        return helper(0,0,m-1,grid);
+        
     }
 };
