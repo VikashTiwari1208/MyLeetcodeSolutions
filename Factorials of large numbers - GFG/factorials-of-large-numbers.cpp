@@ -9,26 +9,54 @@ using namespace std;
 class Solution {
 public:
     vector<int> factorial(int n){
-        // code here
-        vector<int>ans;
-        ans.push_back(1);
-        for(int i=2;i<=n;i++)
+        vector<int>v;
+        if(n<=2)
         {
-            int carry=0;
-            for(int j=0;j<ans.size();j++)
-            {
-                int temp=ans[j]*i+carry;
-                ans[j]=temp%10;
-                carry=temp/10;
-            }
-            while(carry)
-            {
-                ans.push_back(carry%10);
-                carry=carry/10;
-            }
+            v.push_back(n);
+            return v;
         }
-        reverse(ans.begin(),ans.end());
-        return ans;
+string s="2",p="2";
+int carry=0;
+for(int i=3;i<=n;i++)
+{   s=p;
+p="";
+carry=0;
+
+    for(int j=0;j<s.size();j++)
+      {  //cout<<s[j]-48<<" ";
+          int x=(s[j]-48)*i + carry;
+         // cout<<x<<" ";
+        int r=x%10;
+        carry=x/10;
+        
+        
+        char rc=r+48;
+       
+       p+=rc;
+          
+      }
+        if(carry){ 
+         
+         while(carry)
+         {
+             int r=carry%10;
+             carry=carry/10;
+             
+             p+=char(r+48);
+         }
+       
+        }
+       
+      
+}
+ 
+//cout<<s<<" "<<p<<" ";
+for(int i=p.size()-1;i>=0;i--)
+{
+    v.push_back(p[i]-48);
+}
+return v;
+
     }
 };
 
