@@ -34,7 +34,7 @@ public:
                 ans=max(ans,score(s[i],m[j])+helper(i+1,n_mask,s,m));
             }
         }
-        return ans;
+        return dp[i][mask]=ans;
     }
     int maxCompatibilitySum(vector<vector<int>>& students, vector<vector<int>>& mentors) {
         memset(dp,-1,sizeof(dp));
