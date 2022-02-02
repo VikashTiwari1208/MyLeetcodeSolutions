@@ -2,7 +2,7 @@
 
 <p>For every (contiguous) subarray <code>sub = [arr[i], arr[i + 1], ..., arr[j]]</code> (with <code>i &lt;= j</code>), we take the bitwise OR of all the elements in <code>sub</code>, obtaining a result <code>arr[i] | arr[i + 1] | ... | arr[j]</code>.</p>
 
-<p>Return th<span class="highlighter--highlighted" style="background-color: yellow;" data-highlight-id="0">e number of possible results</span>. Results that occur more than once are only counted once in the final answer</p>
+<p>Return the number of possible results. Results that occur more than once are only counted once in the final answer</p>
 
 <p>&nbsp;</p>
 <p><strong>Example 1:</strong></p>
