@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<vector<int>>dp;
-    int helper(int idx,int mask,vector<int>&nums)
+    int helper(const int &idx,const int &mask,vector<int>&nums)
     {
         int n=nums.size();
         if(idx>n/2)
@@ -32,7 +32,8 @@ public:
     int maxScore(vector<int>& nums) {
         int n=nums.size();
         dp.resize((n/2)+1,vector<int>((1<<n),-1));
-         
-        return helper(1,0,nums);
+         int idx=1;
+        int mask=0;
+        return helper(idx,mask,nums);
     }
 };
