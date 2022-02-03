@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int>dp;
-    long long int mini=-1e10;
+     int mini=INT_MIN;
     int helper(int idx,vector<int>&s)
     {
         int n=s.size();
@@ -13,13 +13,12 @@ public:
         {
             return dp[idx];
         }
-        long long int ans=mini;
+         int ans=mini;
         int sum=0;
         for(int i=idx;i<min(idx+3,n);i++)
         {
             sum+=s[i];
-            long long int temp=min({helper(i+2,s),helper(i+3,s),helper(i+4,s)});
-            ans=max(ans,sum+temp);
+            ans=max(ans,sum-helper(i+1,s));
         }
         return dp[idx]=ans;
     }
@@ -27,12 +26,11 @@ public:
         int n=stone.size();
         dp.resize(n,-1);
         int val=helper(0,stone);
-        int sum=accumulate(stone.begin(),stone.end(),(int)0);
-        if(val>sum-val)
+        if(val>0)
         {
            return "Alice";
         }
-        else if(val<sum-val)
+        else if(val<0)
         {
             return "Bob";
         }
