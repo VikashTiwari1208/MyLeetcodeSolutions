@@ -1,73 +1,55 @@
 class Solution {
 public:
-    const int mod = 1e9+7;
-    unordered_map<int,vector<pair<int,int>>>adj;
-    vector<int>dis;
-    vector<int>vis;
-
-    vector<int>dp;
-    int dfs(int n,int src,int par)
+    const int m = 1e9+7;
+int solve(int i,int p,int n,vector<int> &dis,vector<int> &vis,vector<vector<pair<int,int>>> &g,vector<int> &dp)
     {
-       // cout<<src<<" ";
-        if(src==n)
-        {
-          // cout<<endl;
-            return dp[src]=1;
+        if(n==i){return dp[i]=1;}
+        if(dp[i]!=-1){return dp[i];}
+        vis[i]=1;
+        int ans=0;
+        for(auto child:g[i])
+        {   
+            if(vis[child.first]==1){continue;}
+            if(dis[i]<=dis[child.first]){continue;}
+            ans=(ans+solve(child.first,i,n,dis,vis,g,dp))%m;
+           vis[child.first]=0;
         }
-        if(dp[src]!=-1)
-        {
-            return dp[src];
-        }
-        vis[src]=1;
-            int ans=0;
-        for(auto x:adj[src])
-        {
-            if(x.first!=par)
-            {
-                if(dis[src]>dis[x.first])
-                {
-                    //cout<<x.first<<" ";
-                    ans=(ans+dfs(n,x.first,src))%mod;
-                }
-            }
-        }
-        return dp[src]=ans%mod;
+        return dp[i]=ans%m;
     }
     int countRestrictedPaths(int n, vector<vector<int>>& edges) {
-        dis.resize(n+1,INT_MAX);
-        vis.resize(n+1,-1);
-        dp.resize(n+1,-1);
-        int sz=edges.size();
-        
-        for(int i=0;i<sz;i++)
+        vector<vector<pair<int,int>>> g(n+1);
+        int m=edges.size();
+        for(int i=0;i<m;i++)
         {
-            int a,b,c;
-            a=edges[i][0];
-            b=edges[i][1];
-            c=edges[i][2];
-            adj[a].push_back({b,c});
-            adj[b].push_back({a,c});
+            int x=edges[i][0];
+            int y=edges[i][1];
+            int w=edges[i][2];
+            g[x].push_back({y,w});
+            g[y].push_back({x,w});
         }
-       priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        vector<int> dis(n+1,INT_MAX);
         dis[n]=0;
-        pq.push({0,n});
-        while(pq.empty()==false)
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> q;
+        q.push({0,n});
+        while(q.empty()==false)
         {
-            auto x=pq.top();
-            pq.pop();
-            for(auto v:adj[x.second])
+            auto x=q.top();
+            q.pop();
+            int pw=x.first;
+            int p=x.second;
+            for(auto it:g[p])
             {
-                int src=v.first;
-                int wt=v.second;
-                if(dis[src]>dis[x.second]+wt)
+                int c=it.first;
+                int cw=it.second;
+                if(dis[c]>dis[p]+cw)
                 {
-                    dis[src]=dis[x.second]+wt;
-                    pq.push({dis[src],src});
+                    dis[c]=dis[p]+cw;
+                    q.push({dis[c],c});
                 }
             }
         }
-        
-        return dfs(n,1,-1);
-        
+        vector<int> vis(n+1,0);
+        vector<int> dp(n+1,-1);
+        return solve(1,0,n,dis,vis,g,dp);
     }
 };
