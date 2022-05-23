@@ -1,40 +1,29 @@
 class Solution {
 public:
-    int dp[100005][5];
-    int helper(int i,int left,vector<int>&p)
-    {
-        int n=p.size();
-        if(i==n)
-        {
-            return 0;
-        }
-        if(left==0)
-        {
-            return 0;
-        }
-        if(dp[i][left]!=-1)
-        {
-            return dp[i][left];
-        }
-        bool buy=false;
-        if(left%2==0)
-        {
-            buy=true;
-        }
-        int op1=helper(i+1,left,p);
-        int op2;
-        if(buy)
-        {
-            op2=-p[i]+helper(i+1,left-1,p);
-        }
-        else
-        {
-            op2=p[i]+helper(i+1,left-1,p);
-        }
-        return dp[i][left]=max(op1,op2);
-    }
+    
     int maxProfit(vector<int>& prices) {
-        memset(dp,-1,sizeof(dp));
-        return helper(0,4,prices);
+      int n=prices.size();
+        int pre[n];
+        pre[0]=0;
+        int min_buy=prices[0];
+        for(int i=1;i<n;i++)
+        {
+            pre[i]=max(pre[i-1],prices[i]-min_buy);
+            min_buy=min(min_buy,prices[i]);
+        }
+        int suff[n];
+        suff[n-1]=0;
+        int max_sell=prices[n-1];
+        for(int i=n-2;i>=0;i--)
+        {
+            suff[i]=max(suff[i+1],-prices[i]+max_sell);
+            max_sell=max(max_sell,prices[i]);
+        }
+        int ans=0;
+        for(int i=0;i<n;i++)
+        {
+            ans=max(ans,pre[i]+suff[i]);
+        }
+        return ans;
     }
 };
