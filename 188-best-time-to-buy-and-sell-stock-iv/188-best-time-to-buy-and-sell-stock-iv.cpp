@@ -1,51 +1,35 @@
-class Solution {
-public:
-     int dp[1005][405];
-    int helper(int i,int left,vector<int>&p)
-    {
-        int n=p.size();
-        if(i==n)
+class Solution
+{
+    public:
+
+        int maxProfit(int K, vector<int> &prices)
         {
-            return 0;
-        }
-        if(left==0)
-        {
-            return 0;
-        }
-        if(dp[i][left]!=-1)
-        {
-            return dp[i][left];
-        }
-        bool buy=false;
-        if(left%2==0)
-        {
-            buy=true;
-        }
-        int op1=helper(i+1,left,p);
-        int op2;
-        if(buy)
-        {
-            op2=-p[i]+helper(i+1,left-1,p);
-        }
-        else
-        {
-            op2=p[i]+helper(i+1,left-1,p);
-        }
-        return dp[i][left]=max(op1,op2);
-    }
-    int maxProfit(int k, vector<int>& prices) {
-        int n=prices.size();
-        if(2*k>prices.size())
-        {
-            int ans=0;
-            for(int i=0;i<n-1;i++)
+            int n = prices.size();
+            if (2 *K  > prices.size())
             {
-                ans+=max((int)0,prices[i+1]-prices[i]);
+                int ans = 0;
+                for (int i = 0; i < n - 1; i++)
+                {
+                    ans += max((int) 0, prices[i + 1] - prices[i]);
+                }
+                return ans;
             }
+
+            vector<vector < int>> dp(n, vector<int> (K + 1, 0));
+            int ans = 0;
+            for (int k = 1; k <= K; k++)
+            {
+                int temp = dp[0][k - 1] - prices[0];
+                for (int i = 1; i < n; i++)
+                {
+                    dp[i][k] = dp[i - 1][k];
+                    dp[i][k] = max(dp[i][k], prices[i] + temp);
+                    temp = max(temp, -prices[i] + dp[i][k - 1]);
+
+                    ans = max(ans, dp[i][k]);
+                }
+            }
+
             return ans;
         }
-        memset(dp,-1,sizeof(dp));
-       // int n=prices.size();
-        return helper(0,2*k,prices);
-    }
 };
