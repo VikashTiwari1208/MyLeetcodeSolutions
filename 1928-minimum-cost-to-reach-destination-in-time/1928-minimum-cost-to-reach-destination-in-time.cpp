@@ -1,8 +1,38 @@
 class Solution {
 public:
+     unordered_map<int,vector<pair<int,int>>>adj;
+    
+    int dp[1002][1002];
+    int helper(int src,int max_time,int curr_time,vector<int>&fee)
+    {
+        int n=fee.size();
+        if(curr_time>max_time)
+        {
+            return 100000000;
+        }
+        if(src==n-1)
+        {
+            return dp[src][curr_time]=fee[src];
+        }
+        if(dp[src][curr_time]!=-1)
+        {
+            return dp[src][curr_time];
+        }
+        int res=100000000;
+            for(auto x:adj[src])
+            {
+                int v=x.first;
+                int t=x.second;
+                if(curr_time+t<=max_time)
+                {
+                    res=min(res,fee[src]+helper(v,max_time,curr_time+t,fee));
+                }
+            }
+        return dp[src][curr_time]=res;
+    }
     int minCost(int maxt, vector<vector<int>>& edges, vector<int>& fee) {
         int n=fee.size();
-        unordered_map<int,vector<pair<int,int>>>adj;
+       memset(dp,-1,sizeof(dp));
         //src vertex time
         for(auto x:edges)
         {
@@ -12,50 +42,13 @@ public:
             adj[a].push_back({b,t});
             adj[b].push_back({a,t});
         }
-        vector<int>cost(n,INT_MAX);
-        vector<int>time(n,INT_MAX);
-        time[0]=0;
-        cost[0]=fee[0];
-        priority_queue<vector<int>,vector<vector<int>>,greater<vector<int>>>pq;
-        pq.push({cost[0],time[0],0});
-        // cost,time,v;
-        while(pq.empty()==false)
+       
+        int res=helper(0,maxt,0,fee);
+        if(res==100000000)
         {
-            vector<int> x=pq.top();
-            pq.pop();
-            int ptime=x[1];
-            int src=x[2];
-            int pcost=x[0];
-            if(src==n-1)
-            {
-                return cost[src];
-            }
-            for(auto x:adj[src])
-            {
-                int v=x.first;
-                int t=x.second;
-                if(ptime+t<=maxt)
-                {
-                    // maxtime k under trip ho rhi h
-                    if(cost[v]>pcost+fee[v])
-                    {
-                        cost[v]=pcost+fee[v];
-                        time[v]=ptime+t;
-                        pq.push({cost[v],time[v],v});
-                    }
-                    else if(time[v]>t+ptime)
-                    {
-                        //cost[v]=pcost+fee[v];
-                        time[v]=ptime+t;
-                        pq.push({pcost+fee[v],time[v],v});
-                    } 
-                }
-               
-            }
+            return -1;
         }
-       
-       
-        return -1;
+        return res;
         
     }
 };
