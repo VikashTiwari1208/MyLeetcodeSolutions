@@ -3,25 +3,41 @@ public:
     int minimumAverageDifference(vector<int>& nums) {
         
         int n=nums.size();
-    vector <long long int> v(n,0);
-    v[0]=nums[0];
-    for(int i=1; i<n; i++){
-        v[i]=v[i-1]+nums[i];
-    }
-    int ans=0;
-    int max=INT_MAX;
-    for(int i=0; i<n-1; i++){
-        long long int x=v[i]/(i+1);
-        long long int y=v[n-1]-v[i];
-        y=y/(n-i-1);
-        if(max>abs(y-x)){
-            ans=i;
-            max=abs(x-y);
+        if(n==1)
+        {
+            return 0;
         }
-    }
-    if(max>v[n-1]/n){
-        ans=n-1;
-    }
-    return ans;
+        long long int pre[n];
+        pre[0]=nums[0];
+       long long int sum=nums[0];
+        for(int i=1;i<n;i++)
+        {
+            sum+=nums[i];
+            pre[i]=pre[i-1]+nums[i];
+        }
+        long long int ans=INT_MAX;
+        int idx;
+        for(int i=0;i<n;i++)
+        {
+          long long int temp=sum;
+            temp-=pre[i];
+            int av1=pre[i]/(i+1);
+             int av2=0;
+            if(i==n-1)
+            {
+                av2=0;
+            }
+            else
+            {
+                av2=temp/(n-i-1);
+            }
+           
+            if(ans>abs(av1-av2))
+            {
+                ans=abs(av1-av2);
+                idx=i;
+            }
+        }
+        return idx;
     }
 };
