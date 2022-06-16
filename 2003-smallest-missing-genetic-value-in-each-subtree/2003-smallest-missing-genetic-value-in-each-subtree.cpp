@@ -1,15 +1,18 @@
 class Solution {
 public:
     unordered_map<int,vector<int>>adj;
-    vector<int>vis;
+   // vector<int>vis;
     vector<int>vis2;
     void dfs(int src,vector<int>&nums)
     {
-        vis[src]=1;
+        if(vis2[nums[src]]==1)
+        {
+            return ;
+        }
         vis2[nums[src]]=1;
         for(auto x:adj[src])
         {
-            if(vis[x]==-1)
+            if(vis2[nums[x]]==-1)
             {
                 dfs(x,nums);
             }
@@ -17,7 +20,7 @@ public:
     }
     vector<int> smallestMissingValueSubtree(vector<int>& par, vector<int>& nums) {
         int n=par.size();
-        vis.resize(n,-1);
+       // vis.resize(n,-1);
         vis2.resize(1e5+3,-1);
         for(int i=1;i<n;i++)
         {
