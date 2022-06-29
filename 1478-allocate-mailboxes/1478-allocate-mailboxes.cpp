@@ -26,8 +26,8 @@ public:
             {
                 
                  res+=abs(med-house[j]);
-                ans=min(ans,res+helper(j+1,k-1,house));
             }
+             ans=min(ans,res+helper(i+1,k-1,house));
         }
         return dp[idx][k]=ans;
        
