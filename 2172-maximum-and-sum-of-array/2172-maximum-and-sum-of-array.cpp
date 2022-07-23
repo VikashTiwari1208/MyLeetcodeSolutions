@@ -39,16 +39,7 @@ public:
             slots[2*i]=i+1;
             slots[(2*i)+1]=i+1;
         }
-        for(auto x:slots)
-        {
-            cout<<x<<" ";
-        }
-        cout<<endl;
-        for(auto x:v)
-        {
-            cout<<x<<" ";
-        }
-   
+    
           return helper(v,slots,0,mask);
     }
 };
