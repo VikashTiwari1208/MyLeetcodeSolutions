@@ -1,8 +1,8 @@
 class Solution {
 public:
-    int dp[72][5000];
+   // int dp[72][5000];
     //int ans=50000;
-    int helper(vector<vector<int>>&mat,int idx,int target,int sum)
+    /*int helper(vector<vector<int>>&mat,int idx,int target,int sum)
     {
         int n=mat.size();
         if(idx>=n)
@@ -24,9 +24,20 @@ public:
             }
         }
         return dp[idx][sum]=ans;
-    }
+    } */
     int minimizeTheDifference(vector<vector<int>>& mat, int target) {
-        memset(dp,-1,sizeof(dp));
-       return helper(mat,0,target,0);
+        bitset<5000> p(1);
+        for (auto& r : mat) {
+            bitset<5000> tmp;
+            for (auto& i : r) {
+                tmp = tmp | (p << i);
+            }
+            swap(p,tmp);
+        }
+        int res = 10000;
+        for (int i = 0; i < 5000; ++i) {
+            if (p[i]) res = min(res, abs(i - target));
+        }
+        return res;
     }
 };
