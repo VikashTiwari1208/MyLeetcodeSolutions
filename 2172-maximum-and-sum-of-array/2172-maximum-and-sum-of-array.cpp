@@ -1,32 +1,54 @@
 class Solution {
 public:
-    int helper(vector<int>&v,vector<int>&slots,int idx,map<vector<int>,int>&mp)
-{
-    int n=v.size();
-    if(idx==n)
+  int dp[20][(1<<19)-1];
+    int helper(vector<int>&a,vector<int>&b,int idx,int mask)
     {
-        return 0;
-    }
-    if(mp.find(slots)!=mp.end())
-    {
-        return mp[slots];
-    }
-    int sz=slots.size();
-    int sum=0;
-    for(int i=1;i<sz;i++)
-    {
-        if(slots[i]<2)
+        int n=a.size();
+        if(idx==n)
         {
-           slots[i]++;
-           sum=max((v[idx]&i)+helper(v,slots,idx+1,mp),sum);
-           slots[i]--;
+            return 0;
         }
+        if(dp[idx][mask]>-1)
+        {
+            return dp[idx][mask];
+        }
+        int ans=0;
+        int sz=b.size();
+        for(int i=0;i<sz;i++)
+        {
+            if((mask&(1<<i))==0)
+            {
+               int n_mask=mask|(1<<i);
+                int temp=a[idx]&b[i];
+                ans=max(ans,temp+helper(a,b,idx+1,n_mask));
+            }
+        }
+        return dp[idx][mask]=ans;
     }
-    return mp[slots]=sum;
-}
     int maximumANDSum(vector<int>& v, int k) {
-        map<vector<int>,int>mp;
-        vector<int>slots(k+1,0);
-         return helper(v,slots,0,mp);
+        int n=v.size();
+        for(int i=1;i<=(2*k)-n;i++)
+        {
+            v.push_back(0);
+        }
+        int mask=0;
+        memset(dp,-1,sizeof(dp));
+        vector<int>slots(2*k,0);
+        for(int i=0;i<k;i++)
+        {
+            slots[2*i]=i+1;
+            slots[(2*i)+1]=i+1;
+        }
+        for(auto x:slots)
+        {
+            cout<<x<<" ";
+        }
+        cout<<endl;
+        for(auto x:v)
+        {
+            cout<<x<<" ";
+        }
+   
+          return helper(v,slots,0,mask);
     }
 };
