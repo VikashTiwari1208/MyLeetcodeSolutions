@@ -22,7 +22,7 @@ class Trie {
     void insert(int num) {
       Node * node = root;
       // cout << num << endl; 
-      for (int i = 31; i >= 0; i--) {
+      for (int i = 15; i >= 0; i--) {
         int bit = (num >> i) & 1;
         if (!node -> contain(bit)) {
           node -> put(bit, new Node());
@@ -36,7 +36,7 @@ class Trie {
     int findcnt(int num,int limit) {
      Node* curr=root;
         int ans=0;
-       for(int i=31;i>=0;i--)
+       for(int i=15;i>=0;i--)
        {
            int bit=(limit>>i)&1;
            int valbit=(num>>i)&1;
