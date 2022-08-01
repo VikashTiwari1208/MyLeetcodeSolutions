@@ -41,14 +41,10 @@ public:
                    auto x=pq.top();
                     pq.pop();
                     int apple=x.second;
-                    ans++;
-                    apple--;
-                    if(apple>0)
-                    {
-                        pq.push({x.first,apple});
-                    }
+                    ans+=min(x.first-day,x.second);
+                    day+=min(x.first-day,x.second);
                 }
-            day++;
+           // day++;
         }
         return ans;
     }
