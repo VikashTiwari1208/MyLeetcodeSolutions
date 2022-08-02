@@ -4,16 +4,16 @@ public:
         int n=nums.size();
         int dp[n];
         dp[0]=nums[0];
-        multiset<int>s;
-        s.insert(dp[0]);
+        priority_queue<pair<int,int>>pq;
+        pq.push({dp[0],0});
         for(int i=1;i<n;i++)
         {
-            if(i>k)
+            while(pq.size()>0&&pq.top().second<i-k)
             {
-                s.erase(s.find(dp[i-k-1]));
+                pq.pop();
             }
-            dp[i]=nums[i]+*s.rbegin();
-            s.insert(dp[i]);
+            dp[i]=nums[i]+pq.top().first;
+            pq.push({dp[i],i});
         }
         return dp[n-1];
     }
