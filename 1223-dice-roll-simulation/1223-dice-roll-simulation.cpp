@@ -1,39 +1,46 @@
 class Solution {
 public:
     int mod=1e9+7;
-    int dp[50001][7][17];
-    int m;
-    int helper(int idx,int last,int len,vector<int>&maxi)
-    {
-        if(idx>=m)
+
+    int dieSimulator(int n, vector<int>&maxi) {
+       vector<vector<vector<int>>> dp(n, vector<vector<int>>(6, vector<int>(16, 0)));
+        for(int i=0;i<6;i++)
         {
-            return 1;
+          dp[0][i][1]=1;
         }
-        if(dp[idx][last][len]!=-1)
+        // dp[i][j][k] total no of seq ending at j occuring k consecutive at ith turn
+        for(int i=1;i<n;i++)
         {
-            return dp[idx][last][len];
+            for(int j=0;j<6;j++)
+            {
+                for(int k=0;k<6;k++) // j is occuring first
+                {
+                    if(k==j)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                      for(int c=0;c<=maxi[k];c++)
+                      {
+                          dp[i][j][1]=(dp[i][j][1]%mod+dp[i-1][k][c]%mod)%mod;
+                      }
+                    }
+                }
+                for(int c=2;c<=maxi[j];c++)
+                {
+                    dp[i][j][c]=(dp[i][j][c]%mod+dp[i-1][j][c-1]%mod)%mod;
+                }
+            }
         }
         int ans=0;
-        for(int i=1;i<=6;i++)
+        for(int i=0;i<6;i++)
         {
-            if(i==last&&len==maxi[i-1])
+            for(int j=0;j<=maxi[i];j++)
             {
-                continue;
-            }
-            else if(i==last&&len<maxi[i-1])
-            {
-                ans=(ans%mod+helper(idx+1,i,len+1,maxi))%mod;
-            }
-            else
-            {
-                ans=(ans%mod+helper(idx+1,i,1,maxi))%mod;
+                ans=(ans%mod+dp[n-1][i][j]%mod)%mod;
             }
         }
-        return dp[idx][last][len]=ans;
-    }
-    int dieSimulator(int n, vector<int>&maxi) {
-        m=n;
-        memset(dp,-1,sizeof(dp));
-        return helper(0,0,0,maxi);
+        return ans;
     }
 };
