@@ -7,13 +7,14 @@ public:
         for(int i=0;i<6;i++)
         {
           dp[0][i][1]=1;
+            //dp[0][i][0]=1;
         }
         // dp[i][j][k] total no of seq ending at j occuring k consecutive at ith turn
         for(int i=1;i<n;i++)
         {
             for(int j=0;j<6;j++)
             {
-                for(int k=0;k<6;k++) // j is occuring first
+                for(int k=0;k<6;k++) // j is occuring first time
                 {
                     if(k==j)
                     {
@@ -21,13 +22,13 @@ public:
                     }
                     else
                     {
-                      for(int c=0;c<=maxi[k];c++)
+                      for(int c=0;c<=min(maxi[k],i);c++)
                       {
                           dp[i][j][1]=(dp[i][j][1]%mod+dp[i-1][k][c]%mod)%mod;
                       }
                     }
                 }
-                for(int c=2;c<=maxi[j];c++)
+                for(int c=2;c<=min(i+1,maxi[j]);c++)
                 {
                     dp[i][j][c]=(dp[i][j][c]%mod+dp[i-1][j][c-1]%mod)%mod;
                 }
