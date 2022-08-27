@@ -36,15 +36,6 @@ public:
         }
            return cnt;
        
-           int op1=0,op2=0;
-            int mid1=v[(n*m)/2];
-        int mid2=v[((n*m)/2)-1];
-        for(auto &y:v)
-        {
-            op1+=abs(y-mid1)/x;
-            op2+=abs(y-mid2)/x;
-        }
-        return min(op1,op2);
-        
+          
     }
 };
