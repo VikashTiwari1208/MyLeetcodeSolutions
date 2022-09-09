@@ -1,9 +1,9 @@
 class Solution {
 public:
     long long maxRunTime(int n, vector<int>&v) {
-        long long int ans=0;
-       long long int l=0;
-        long long int r=0;
+        long long  ans=0;
+       long long  l=0;
+        long long  r=0;
         for(auto x:v)
         {
             r+=x;
@@ -12,8 +12,8 @@ public:
         sort(v.begin(),v.end());
         while(l<=r)
         {
-            long long int mid=l+(r-l)/2;
-            long long int sum=0;
+            long long  mid=l+(r-l)/2;
+            long long sum=0;
             int cnt=0;
             for(auto x:v)
             {
